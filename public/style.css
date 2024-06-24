@@ -1,0 +1,24 @@
+body {
+    background-color: #dbd8e3;
+    display: flex;
+    justify-content: center; /* Horizontally center */
+    align-items: center; /* Vertically center */
+    height: 100vh; /* Make body take full height of viewport */
+    margin: 0; /* Remove default body margin */
+}
+input[type="text"] {
+    width: 300px;
+    height: 40px; 
+   
+}
+.button {
+    width: 310px; 
+    height: 40px;
+    padding: 10px 20px; 
+    font-size: 16px; 
+    cursor: pointer;
+   
+}
+.button:hover{
+    background-color:#c4c1e0;
+}
