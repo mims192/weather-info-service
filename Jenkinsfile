@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { label 'docker-agent' }
 
     environment {
         COMPOSE_PROJECT_NAME = 'weather-info-service'
