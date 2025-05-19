@@ -14,16 +14,15 @@ pipeline {
 
         stage('Build and Run Docker Image') {
             steps {
-                sh 'docker-compose up --build'
+                sh 'docker compose up --build -d'
             }
         }
-
     }
 
     post {
         always {
             echo 'Cleaning up...'
-            sh 'docker-compose down'
+            sh 'docker compose down'
         }
     }
 }
