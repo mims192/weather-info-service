@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-info-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: weather-info
+  template:
+    metadata:
+      labels:
+        app: weather-info
+    spec:
+      containers:
+        - name: weather-info
+          image: weather-info-service:1.0
+          ports:
+            - containerPort: 3000
+          env:
+            - name: API
+              valueFrom:
+                secretKeyRef:
+                  name: weather-api-secret
+                  key: api-key

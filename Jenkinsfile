@@ -5,12 +5,7 @@ pipeline {
         COMPOSE_PROJECT_NAME = 'weather-info-service'
     }
 
-    stages {
-        stage('Clone Repository') {
-            steps {
-                git url: 'https://github.com/mims192/weather-info-service.git'
-            }
-        }
+    stages {}
 
         stage('Build and Run Docker Image') {
             steps {
