@@ -12,17 +12,12 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build and Run Docker Image') {
             steps {
-                sh 'docker-compose build'
+                sh 'docker-compose up --build'
             }
         }
 
-        stage('Run Application') {
-            steps {
-                sh 'docker-compose up -d'
-            }
-        }
     }
 
     post {
