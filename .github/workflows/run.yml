@@ -1,42 +1,32 @@
-name: Scheduled Cron Job
+name: Docker Cron Job
 
 on:
   schedule:
-    - cron: '0 2 * * *'  # Every day at 2:00 AM UTC
-  workflow_dispatch:      # Optional: Manual run from GitHub UI
+    - cron: '0 2 * * *'  # Daily at 2:00 AM UTC
+  workflow_dispatch:
 
 jobs:
-  cron-task:
+  docker-task:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'  # Change if needed
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
 
-      - name: Install Node dependencies
-        run: npm ci  # Uses package-lock.json for clean install
+      - name: Verify Docker is working
+        run: docker version
 
-      - name: Install Docker
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker.io docker-compose
-          sudo systemctl start docker
-          sudo systemctl enable docker
-
-      - name: Verify Docker installation
-        run: |
-          docker --version
-          docker-compose --version
-
-      # Optional: Build and run containers (adjust as needed)
       - name: Build Docker image
         run: docker build -t my-app .
 
-      - name: Run Docker Compose
-        run: docker-compose up -d
+      - name: Run Docker container (optional)
+        run: docker run -d -p 3000:3000 my-app
+
+      # Optional cleanup
+      # - name: Stop container
+      #   run: docker stop $(docker ps -q)
+
 
