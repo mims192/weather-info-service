@@ -1,8 +1,8 @@
 # Start Generation Here
-FROM node:14
+FROM node:19.5.0-alpine
 
 # Set the working directory
-WORKDIR /usr/src/app
+WORKDIR .
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
