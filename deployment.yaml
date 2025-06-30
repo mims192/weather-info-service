@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: weather-info
-          image: nimishanb/weather-info-service:1.0
+          image: koushik694mper/weather-info-service:1.0
           ports:
             - containerPort: 3000
           env:
