@@ -17,7 +17,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
+                    bat "docker build -t %IMAGE_NAME%:%IMAGE_TAG% ."
                 }
             }
         }
@@ -26,9 +26,12 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                        sh 'echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin'
-                        sh "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
-                        sh 'docker logout'
+                        bat '''
+                        echo Logging into Docker Hub
+                        echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin
+                        docker push %IMAGE_NAME%:%IMAGE_TAG%
+                        docker logout
+                        '''
                     }
                 }
             }
@@ -38,8 +41,8 @@ pipeline {
             steps {
                 script {
                     withCredentials([file(credentialsId: 'kubeconfig-credentials', variable: 'KUBECONFIG')]) {
-                        sh 'kubectl apply -f deployment.yaml'
-                        sh 'kubectl apply -f service.yaml'
+                        bat 'kubectl apply -f deployment.yaml'
+                        bat 'kubectl apply -f service.yaml'
                     }
                 }
             }
@@ -55,5 +58,3 @@ pipeline {
         }
     }
 }
-
-// dockerhub-creds
